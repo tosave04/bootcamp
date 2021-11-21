@@ -1,13 +1,75 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+#mr-bot {
+  position: fixed;
+  background-color: coral;
+  top: 10%;
+  padding: 20px;
+}
+
+#page {
+  display: grid;
+  max-width: 1300px;
+  width: 100%;
+  margin: auto;
+  grid-template:
+    [header-left] "head head head" 200px [header-right]
+    [main-left] "nav main aside" [main-right]
+    [footer-left] "foot foot foot" 150px [footer-right]
+    / 200px auto 150px;
+  gap: 10px;
+}
+
+header,
+nav,
+main,
+aside,
+footer {
+  padding: 10px;
+}
+
+header {
+  background-color: lightsalmon;
+  grid-area: head;
+  font-size: 2rem;
+}
+header img {
+  height: 50px;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+nav {
+  background-color: lightgreen;
+  grid-area: nav;
+}
+nav h2 {
+  text-align: center;
+}
+
+main {
+  background-color: beige;
+  grid-area: main;
+}
+
+aside {
+  background-color: lightgray;
+  grid-area: aside;
+  text-align: center;
+}
+
+footer {
+  color: whitesmoke;
+  background-color: lightslategrey;
+  grid-area: foot;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
 }
