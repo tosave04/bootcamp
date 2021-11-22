@@ -1,129 +1,86 @@
 import React from "react";
 
+import {
+  MonHeader,
+  MaNavbar,
+  MonMain,
+  MonAside,
+  MonFooter,
+  Mrbot,
+} from "./Composants.js";
+
 import "./App.css";
 
 function App() {
-  // Initialise le prompteur (input)
-  let prompteur = "";
+  /**
+   * Fonction de contrôle des balises gestion()
+   * children : La question à poser
+   * cible : Une fonction qui modifie la state voulue
+   * suite : La prochaine fonction à appeler
+   */
+  const gestion = (children, cible, suite) => {
+    const props = { children, cible, suite };
+    setMrbot(<Mrbot {...props}></Mrbot>);
+  };
 
-  // Modification de la balise Header
+  // Modification de la balise header
   const gestionHeader = () => {
-    const divHeader = (children) => {
-      setHeader(
-        <header id="header">
-          <img alt="Logo du créateur app react" src="logo192.png" />
-          {children}
-        </header>
-      );
-    };
-
-    // Démarre le prompteur pour la section suivante en lui indiquant la section à traiter et celle qui suivra
-    setMrbot(
-      mrbotDiv(
-        "Quel nom de site voudrais-tu créer ? (Enter pour valider)",
-        divHeader,
-        gestionNavbar
-      )
+    gestion(
+      "Quel nom de site voudrais-tu créer ? (Enter pour valider)",
+      (children) => {
+        setHeader(<MonHeader>{children}</MonHeader>);
+      },
+      gestionNavbar
     );
   };
 
-  // Modification de la balise Navbar
+  // Modification de la balise navbar
   const gestionNavbar = () => {
-    const divNavbar = (children) => {
-      setNavbar(
-        <nav id="navbar">
-          <h2>{children}</h2>
-          <ul>
-            {["Alpha", "Beta", "Gamma", "Delta", "Epsilon"].map(
-              (element, id) => (
-                <li key={id}>{element}</li>
-              )
-            )}
-          </ul>
-        </nav>
-      );
-    };
-
-    setMrbot(mrbotDiv("Donne un titre à ton menu ?", divNavbar, gestionMain));
+    gestion(
+      "Donne un titre à ton menu ?",
+      (children) => {
+        setNavbar(<MaNavbar>{children}</MaNavbar>);
+      },
+      gestionMain
+    );
   };
 
-  // Modification de la balise Main
+  // Modification de la balise main
   const gestionMain = () => {
-    const divMain = (children) => {
-      setMain(
-        <main id="main">
-          <h1>{children}</h1>
-          <p>
-            Tu autem, Fanni, quod mihi tantum tribui dicis quantum ego nec
-            adgnosco nec postulo, facis amice; sed, ut mihi videris, non recte
-            iudicas de Catone; aut enim nemo, quod quidem magis credo, aut si
-            quisquam, ille sapiens fuit. Quo modo, ut alia omittam, mortem filii
-            tulit! memineram Paulum, videram Galum, sed hi in pueris, Cato in
-            perfecto et spectato viro.
-          </p>
-          <p>
-            Cognitis enim pilatorum caesorumque funeribus nemo deinde ad has
-            stationes appulit navem, sed ut Scironis praerupta letalia
-            declinantes litoribus Cypriis contigui navigabant, quae Isauriae
-            scopulis sunt controversa.
-          </p>
-          <p>
-            Quanta autem vis amicitiae sit, ex hoc intellegi maxime potest, quod
-            ex infinita societate generis humani, quam conciliavit ipsa natura,
-            ita contracta res est et adducta in angustum ut omnis caritas aut
-            inter duos aut inter paucos iungeretur.
-          </p>
-        </main>
-      );
-    };
-
-    setMrbot(
-      mrbotDiv(
-        "Maintenant la page principale ! On la nomme comment ?",
-        divMain,
-        gestionAside
-      )
+    gestion(
+      "Maintenant la page principale ! On la nomme comment ?",
+      (children) => {
+        setMain(<MonMain>{children}</MonMain>);
+      },
+      gestionAside
     );
   };
 
   // Modification de la balise Aside
   const gestionAside = () => {
-    const divAside = (children) => {
-      setAside(
-        <aside id="aside">
-          <h2>{children}</h2>
-          {[1, 2, 3].map((info, id) => (
-            <p key={id}>Info {info}</p>
-          ))}
-        </aside>
-      );
-    };
-
-    setMrbot(
-      mrbotDiv("Allez un petit side pour la forme :", divAside, gestionFooter)
+    gestion(
+      "Allez un petit side pour la forme :",
+      (children) => {
+        setAside(<MonAside>{children}</MonAside>);
+      },
+      gestionFooter
     );
   };
 
   // Modification de la balise Footer
   const gestionFooter = () => {
-    const divFooter = (children) => {
-      setFooter(
-        <footer id="footer">
-          <div id="copyright">Copyright : {children}</div>
-        </footer>
-      );
-    };
-
-    setMrbot(
-      mrbotDiv(
-        "Presque terminé, ou ! Ton copyright pour le footer ?",
-        divFooter,
-        finalisation
-      )
+    gestion(
+      "Presque terminé, ou ! Ton copyright pour le footer ?",
+      (children) => {
+        setFooter(<MonFooter>{children}</MonFooter>);
+      },
+      finalisation
     );
   };
 
-  // Fin de l'édition
+  /**
+   * Fin de l'édition, on arrête le prompteur
+   */
   const finalisation = () => {
     setMrbot();
     alert(`Bravo tu as fini ta super structure grid !!!
@@ -133,33 +90,9 @@ function App() {
     );
   };
 
-  // Gestion du prompteur
-  const mrbotDiv = (question, cible, suite) => {
-    // Capte la réponse à la question du prompteur
-    const handleChange = (event) => {
-      prompteur = event.target.value;
-      // console.log(prompteur);
-      cible(prompteur); // Met à jour le state récupéré par cible
-    };
-
-    // Quand on appuie sur la touche 'Enter'
-    const handlePress = (event) => {
-      // console.log(event.code)
-      if (event.code === "Enter" || event.code === "NumpadEnter") {
-        event.target.value = "";
-        suite();
-      }
-    };
-
-    // Met à jour le prompteur
-    return (
-      <div id="mr-bot">
-        {`${question} `}
-        <input onChange={handleChange} onKeyDown={handlePress} />
-      </div>
-    );
-  };
-
+  /**
+   * Déclaration et initialisation des states
+   */
   const [mrBot, setMrbot] = React.useState(
     <div id="mr-bot" onClick={gestionHeader}>
       Clic sur moi pour commencer la création d'un super site !
@@ -172,6 +105,9 @@ function App() {
   const [aside, setAside] = React.useState();
   const [footer, setFooter] = React.useState();
 
+  /**
+   * Retour du résultat, j'utilise les states ici plutôt que les composants pour ne pas qu'ils s'affichent par défaut
+   */
   return (
     <div id="page">
       {mrBot}
