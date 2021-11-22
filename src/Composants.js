@@ -20,7 +20,7 @@ export function Mrbot({ children, cible, suite }) {
   // Retourne le nouveau prompteur
   return (
     <div id="mr-bot">
-      {children}
+      {children + " "}
       <input onChange={handleChange} onKeyDown={handlePress} />
     </div>
   );
@@ -49,29 +49,50 @@ export function MaNavbar({ children }) {
 }
 
 export function MonMain({ children }) {
+  // Petite fonction pour faire des phrases sans queue ni tête en faux latin :)
+  function LatinRandom() {
+    const latinMots = [
+      "tu",
+      "autem",
+      "fanni",
+      "quod",
+      "tantum",
+      "tribui",
+      "dicis",
+      "quantum",
+      "ego",
+      "nec",
+      "adgnosco",
+      "pilatorum",
+      "caesorumque",
+      "funeribus",
+      "nemo",
+      "deinde",
+      "ad",
+      "has",
+      ",",
+    ];
+
+    let latinRetour = "";
+
+    for (let i = 0; i < Math.random() * 100 + 50; i++) {
+      let mot = latinMots[Math.floor(Math.random() * latinMots.length)];
+      latinRetour =
+        latinRetour === "" && mot === "," ? latinRetour : latinRetour + mot + " ";
+    }
+
+    return <p>{latinRetour[0].toUpperCase() + latinRetour.substr(1)}</p>;
+  }
+
   return (
     <main id="main">
-      <h1>{children}</h1>
-      <p>
-        Tu autem, Fanni, quod mihi tantum tribui dicis quantum ego nec adgnosco
-        nec postulo, facis amice; sed, ut mihi videris, non recte iudicas de
-        Catone; aut enim nemo, quod quidem magis credo, aut si quisquam, ille
-        sapiens fuit. Quo modo, ut alia omittam, mortem filii tulit! memineram
-        Paulum, videram Galum, sed hi in pueris, Cato in perfecto et spectato
-        viro.
-      </p>
-      <p>
-        Cognitis enim pilatorum caesorumque funeribus nemo deinde ad has
-        stationes appulit navem, sed ut Scironis praerupta letalia declinantes
-        litoribus Cypriis contigui navigabant, quae Isauriae scopulis sunt
-        controversa.
-      </p>
-      <p>
-        Quanta autem vis amicitiae sit, ex hoc intellegi maxime potest, quod ex
-        infinita societate generis humani, quam conciliavit ipsa natura, ita
-        contracta res est et adducta in angustum ut omnis caritas aut inter duos
-        aut inter paucos iungeretur.
-      </p>
+      <h1>{children.toUpperCase()}</h1>
+      <LatinRandom />
+      <LatinRandom />
+      <LatinRandom />
+      <LatinRandom />
+      <LatinRandom />
+      <LatinRandom />
     </main>
   );
 }
